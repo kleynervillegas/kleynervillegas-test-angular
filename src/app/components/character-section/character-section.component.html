@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card">
+            <form action="">
+                <!-- <input type="hidden" name="_id" #_id="ngModel"> -->
+                <div class="input-filed col s12">
+                    <select name="miselect" id="select" (change)="seachCharacter($event)">
+                        <option [selected]="true" [disabled]="true">Select your Character...</option>
+                        <option [value]="item" *ngFor="let item of lista">{{item}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-content">
+                <h5 class="center-align">List of Character</h5>
+                <div class="input-filed col s2 offset-m9">
+                    <input type="text" name="filterPost" [(ngModel)]="filterPost" placeholder="Search">
+                </div>
+                <table class="striped centered responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Patronus</th>
+                            <th>Age</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of data | filter:filterPost">
+                            <td>{{item.name }}</td>
+                            <td>
+                                <div *ngIf="item.patronus==''; else elseBlock">----</div>
+                                <ng-template #elseBlock>{{item.patronus}}</ng-template>
+                            </td>
+                            <td>
+                                <div *ngIf="item.yearOfBirth==''; else yearOfBirth">----</div>
+                                <ng-template #yearOfBirth>{{year - item.yearOfBirth }}</ng-template>
+                            </td>
+                            <td><img src="{{item.image}}" alt="" width="100px" height="100px">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

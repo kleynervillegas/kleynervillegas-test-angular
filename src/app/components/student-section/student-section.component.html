@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col m4  offset-m2">
+        <div class="card">
+            <div class="card-content">
+                <h5 class="center-align">Register a Student</h5>
+                <form #studentForm="ngForm" (ngSubmit)="Addstudent(studentForm)">
+                    <input type="hidden" name="_id" #_id="ngModel"
+                        [(ngModel)]="StudentSectionService.selectedStudent._id">
+                    <div class="row">
+                        <div class="input-filed col s12">
+                            <input type="text" name="name" #name="ngModel"
+                                [(ngModel)]="StudentSectionService.selectedStudent.name" placeholder="enter your name">
+
+                        </div>
+                        <div class="input-filed col s12">
+                            <input type="text" name="patronus" #patronus="ngModel"
+                                [(ngModel)]="StudentSectionService.selectedStudent.patronus"
+                                placeholder="enter your patronus">
+                        </div>
+                        <div class="input-field col s12">
+                            <input type="text" name="age" #age="ngModel"
+                                [(ngModel)]="StudentSectionService.selectedStudent.age" placeholder="enter your age">
+                        </div>
+                        <div class="file-field input-field col s6">
+                            <div class="btn">
+                                <span>File</span>
+                                <input type="file" name="image" #image="ngModel"
+                                    [(ngModel)]="StudentSectionService.selectedStudent.image"
+                                    placeholder="load your image" (change)="capturarFile($event)">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                        <div calss="col s6">
+                            <img [src]="previsualizacion" alt="" width="100px" height="100px">
+                        </div>
+                        <div class="">
+                            <div class="input-field col s12"></div>
+                            <button class="btn left">save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- fin -->
+    <div class="col m6">
+        <div class="card">
+            <div class="card-content">
+                <h5 class="center-align">List of Student</h5>
+                <div class="input-filed col s2 offset-m9">
+                    <input type="text" name="filterPost" [(ngModel)]="filterPost" placeholder="Search">
+                </div>
+                <table class="striped centered responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Patronus</th>
+                            <th>Age</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of data |  filter:filterPost">
+                            <td>{{item.name }}</td>
+                            <td>
+                                <div *ngIf="item.patronus==''; else elseBlock">----</div>
+                                <ng-template #elseBlock>{{item.patronus}}</ng-template>
+                            </td>
+                            <td>
+                                <div *ngIf="item.age ; else elseAge">{{item.age}}</div>
+                                <ng-template #elseAge>
+                                    <div *ngIf="item.yearOfBirth==''; else yearOfBirth">----</div>
+                                    <ng-template #yearOfBirth>{{year - item.yearOfBirth }}</ng-template>
+                                </ng-template>
+                            </td>
+                            <td>
+                                <div *ngIf="item.age ; else elseImg"><img src="{{item.previsualizacion}}" alt="" width="100px" height="100px"></div>
+                                <ng-template #elseImg><img src="{{item.image}}" alt="" width="100px" height="100px">
+                                </ng-template>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
